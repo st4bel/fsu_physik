@@ -3,11 +3,12 @@ import os
 import json
 import dateutil.parser
 from operator import itemgetter, attrgetter
+from fsu_physik import common
 app = Flask(__name__)
 app.secret_key = 'ds_timer'
 
 
-
+common.refreshnavigation()
 def innocdn_url(path):
     return "https://dsde.innogamescdn.com/8.58/30847" + path
 
@@ -29,13 +30,14 @@ def index():
 @app.route("/exercise")
 def exercise():
     semester = ""
+    course = ""
     files=[]
     if "semester" in request.args:
         semester = request.args.get("semester")
         if "course" in request.args:
             course = request.args.get("course")
-            files=common.get_course_files(course=course)
-    return render_template("exercise.html",semester=semester,files=files)
+            files=common.get_course_files(semester=semester, course=course)
+    return render_template("exercise.html",semester=semester, course=course, files=files)
 
 @app.route("/refresh")
 def refresh():

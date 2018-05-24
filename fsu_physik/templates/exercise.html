@@ -17,11 +17,11 @@
     </nav>
   </div>
   <div class="col-sm" style="height:1000px">
-    <h2>{{semester}}</h2>
+    <h2>{{semester}} {% if course != "" %} - {{course}}{% endif %}</h2>
       <table class="table table-dark">
         <thead>
           <tr>
-            <th scope="col">Fach</th>
+            <th scope="col">Semester</th>
             <th scope="col">Matrikel</th>
             <th scope="col">Dozent</th>
             <th scope="col">Typ</th>

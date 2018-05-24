@@ -23,17 +23,17 @@ def refreshnavigation():
             subnavigation = {}
             subnavigation["name"] = dir
             subnavigation["sub"] = []
-            if dir == request.args.get("semester"):
-                for subdir in os.listdir(os.path.join(exercise_path, dir)):
-                    if os.path.isdir(os.path.join(exercise_path, dir, subdir)):
-                        subnavigation["sub"].append(subdir)
+            #if dir == request.args.get("semester"):
+            for subdir in os.listdir(os.path.join(exercise_path, dir)):
+                if os.path.isdir(os.path.join(exercise_path, dir, subdir)):
+                    subnavigation["sub"].append(subdir)
 
             navigation.append(subnavigation)
     return navigation
     #app.jinja_env.globals.update(g_navigation=navigation)
-def get_course_files(course):
+def get_course_files(semester, course):
     files = []
-    course_path = os.path.join(os.path.expanduser("~"), ".fsu_physik", "exercise", course)
+    course_path = os.path.join(os.path.expanduser("~"), ".fsu_physik", "exercise", semester, course)
     for file in os.listdir(course_path):
         if os.path.isfile(os.path.join(course_path, file)):
             f={}
