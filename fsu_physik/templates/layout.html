@@ -68,8 +68,8 @@
             Semesterauswahl
           </a>
           <div class="dropdown-content">
-            {% for subnavigation in g_navigation %}
-            <a href="/exercise?semester={{subnavigation.name}}">{{subnavigation.name}}</a>
+            {% for sem in g_navigation %}
+            <a href="/exercise?semester={{sem}}">{{sem}}</a>
             {% endfor %}
           </div>
         </li>

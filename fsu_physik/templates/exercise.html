@@ -7,10 +7,10 @@
 
     </ul>
     <nav class="nav flex-column nav-dark bg-dark">
-      {% for subnavigation in g_navigation %}
-        {% if subnavigation.name == semester %}
-          {% for item in subnavigation["sub"] %}
-            <a style="color: white" class="nav-link" href="/exercise?semester={{semester}}&course={{item}}">{{item}}</a>
+      {% for sem in g_navigation %}
+        {% if sem == semester or semester == ""%}
+          {% for cou in g_navigation[sem] %}
+            <a style="color: white" class="nav-link" href="/exercise?semester={{semester}}&course={{cou}}">{{cou}}</a>
           {% endfor %}
         {% endif %}
       {% endfor %}
@@ -22,6 +22,7 @@
         <thead>
           <tr>
             <th scope="col">Semester</th>
+            <th scope="col">Fach</th>
             <th scope="col">Matrikel</th>
             <th scope="col">Dozent</th>
             <th scope="col">Typ</th>
@@ -30,15 +31,24 @@
           </tr>
         </thead>
         <tbody>
-        {% for f in files %}
+        {% for sem in g_navigation %}
+          {% if sem == semester or semester == ""  %}
+            {% for cou in g_navigation[sem] %}
+              {% if cou == course or course == "" %}
+                {% for f in g_navigation[sem][cou] %}
           <tr>
-            <td>{{semester}}</td>
+            <td>{{sem.split()[1]}}</td>
+            <td>{{cou}}
             <td>{{f["matrikel"]}}</td>
             <td>{{f["dozent"]}}</td>
             <td>{{f["typ"]}}</td>
             <td>{{f["nummer"]}}</td>
             <td>(link)</td>
           </tr>
+                {% endfor %}
+              {% endif %}
+            {% endfor %}
+          {% endif %}
         {% endfor %}
         </tbody>
       </table>

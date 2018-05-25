@@ -3,16 +3,16 @@ import os
 import json
 import dateutil.parser
 from operator import itemgetter, attrgetter
-from fsu_physik import common
+from fsu_physik import navigation
 app = Flask(__name__)
 app.secret_key = 'ds_timer'
 
 
-common.refreshnavigation()
+#navigation.get_navigation()
 def innocdn_url(path):
     return "https://dsde.innogamescdn.com/8.58/30847" + path
 
-app.jinja_env.globals.update(version="0.1")
+app.jinja_env.globals.update(version="0.1",g_navigation=navigation.get_exercise_tree())
 
 
 @app.route("/static/<path:path>")
@@ -36,10 +36,11 @@ def exercise():
         semester = request.args.get("semester")
         if "course" in request.args:
             course = request.args.get("course")
-            files=common.get_course_files(semester=semester, course=course)
+            #if semester == "": semester = navigation.get_semester_of_course(course)
+            files=navigation.get_course_files(semester=semester, course=course)
     return render_template("exercise.html",semester=semester, course=course, files=files)
 
 @app.route("/refresh")
 def refresh():
-    app.jinja_env.globals.update(g_navigation=common.refreshnavigation())
+    app.jinja_env.globals.update(g_navigation=navigation.get_exercise_tree())
     return render_template("erklaerbaer.html")

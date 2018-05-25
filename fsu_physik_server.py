@@ -18,7 +18,7 @@ if __name__ == "__main__":
     if "getuid" in dir(os) and os.getuid() == 0 and not args.allow_root:
         print("Starting DS_Timer as root or with sudo is disabled. Use --allow-root")
         sys.exit(1)
-
+        print("hey")
     common.create_folder_structure()
 
     # init logger
