@@ -4,7 +4,7 @@ from fsu_physik import common
 
 def get_exercise_tree():
     nav = {}
-    exercise_path =  os.path.join(os.path.expanduser("~"), ".fsu_physik", "exercise")
+    exercise_path =  os.path.join(common.get_root_folder(), "exercise")
     if not os.path.isdir(exercise_path):
         common.create_folder_structure()
     for semester in os.listdir(exercise_path):
@@ -34,7 +34,7 @@ def emptycourse():
 def get_course_files(semester, course):
     if semester == "": semester = get_semester_of_course(course)
     files = []
-    course_path = os.path.join(os.path.expanduser("~"), ".fsu_physik", "exercise", semester, course)
+    course_path = os.path.join(common.get_root_folder(), "exercise", semester, course)
     for file in os.listdir(course_path):
         if os.path.isfile(os.path.join(course_path, file)):
             f={}
@@ -59,7 +59,7 @@ def get_semester_of_course(course):
     return ""
 def get_navigation():
     navigation = []
-    exercise_path = os.path.join(os.path.expanduser("~"), ".fsu_physik", "exercise")
+    exercise_path = os.path.join(common.get_root_folder(), "exercise")
     #create navigation-tree
     for dir in os.listdir(exercise_path):
         if os.path.isdir(os.path.join(exercise_path, dir)):
