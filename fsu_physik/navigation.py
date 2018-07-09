@@ -1,10 +1,12 @@
 import os
-
+from fsu_physik import common
 
 
 def get_exercise_tree():
     nav = {}
     exercise_path =  os.path.join(os.path.expanduser("~"), ".fsu_physik", "exercise")
+    if not os.path.isdir(exercise_path):
+        common.create_folder_structure()
     for semester in os.listdir(exercise_path):
         if os.path.isdir(os.path.join(exercise_path, semester)):
             nav[semester]={}
