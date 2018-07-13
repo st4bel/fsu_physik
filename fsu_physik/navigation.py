@@ -15,16 +15,17 @@ def get_exercise_tree():
                     nav[semester][course]=[]
                     for file in os.listdir(os.path.join(exercise_path, semester, course)):
                         if os.path.isfile(os.path.join(exercise_path, semester, course, file)):
-                            nav[semester][course].append(split_coursename(file))
+                            nav[semester][course].append(split_coursename(filename=file,semester=semester,course=course))
                     if nav[semester][course]==[]:
                         nav[semester][course].append(emptycourse())
     return nav
-def split_coursename(coursename):
+def split_coursename(semester,course,filename):
     f={}
     try:
-        f["matrikel"], f["dozent"], f["typ"], f["nummer"] = coursename.split(".")[0].split("_")
+        f["matrikel"], f["dozent"], f["typ"], f["nummer"] = filename.split(".")[0].split("_")
     except ValueError:
-        f["matrikel"], f["dozent"], f["typ"], f["nummer"] = coursename.split(".")[0],"","",""
+        f["matrikel"], f["dozent"], f["typ"], f["nummer"] = filename.split(".")[0],"","",""
+    f["link"]=common.get_static_href()+semester+"/"+course+"/"+filename
     return f
 def emptycourse():
     f = {}
@@ -42,10 +43,11 @@ def get_course_files(semester, course):
                 f["matrikel"], f["dozent"], f["typ"], f["nummer"] = file.split(".")[0].split("_")
             except ValueError:
                 f["matrikel"], f["dozent"], f["typ"], f["nummer"] = file.split(".")[0],"","",""
+            f["link"]=common.get_static_href()+semester+"/"+course+"/"+file
             files.append(f)
     if files == []:
         f = {}
-        f["matrikel"], f["dozent"], f["typ"], f["nummer"] = "es konnten keine Dateien gefunden werden","","",""
+        f["matrikel"], f["dozent"], f["typ"], f["nummer"], f["link"] = "es konnten keine Dateien gefunden werden","","","","link"
         files.append(f)
     return files
 
